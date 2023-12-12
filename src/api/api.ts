@@ -1,25 +1,29 @@
 import { supabase } from "@/helpers/supabase";
-import { NewAppointmentDataInterface, HostlerInterface } from "@/interfaces";
+import {
+  NewAppointmentDataInterface,
+  HostlerInterface,
+  BookingInterface,
+} from "@/interfaces";
 
-const GET_ALL = async (
+const GET_ALL = async <T>(
   model: string,
   query: string
-): Promise<HostlerInterface[] | null> => {
+): Promise<T[] | null> => {
   const { data } = await supabase.from(model).select(query);
-  return data as unknown as HostlerInterface[];
+  return data as T[] | null;
 };
 
-const GET_ONE = async (
+const GET_ONE = async <T>(
   model: string,
   query: string,
   id: string
-): Promise<HostlerInterface | null> => {
+): Promise<T | null> => {
   const { data } = await supabase
     .from(model)
     .select(query)
     .eq("id", id)
     .single();
-  return data as unknown as HostlerInterface;
+  return data as T | null;
 };
 
 export const POST = async (submittedData: NewAppointmentDataInterface) => {
@@ -39,17 +43,20 @@ export const POST = async (submittedData: NewAppointmentDataInterface) => {
 };
 
 export const getAllHostlers = async () =>
-  await GET_ALL("horsecares", `id, names, description, services(id, name)`);
+  await GET_ALL<HostlerInterface>(
+    "horsecares",
+    `id, names, description, services(id, name)`
+  );
 
 export const getSingleHostler = async (id: string) =>
-  await GET_ONE(
+  await GET_ONE<HostlerInterface>(
     "horsecares",
     `id, names, description, services(id, name, price)`,
     id
   );
 
 export const getAllBookings = async () =>
-  await GET_ALL(
+  await GET_ALL<BookingInterface>(
     "bookings",
     `id, names, email, date, services(name), horsecares(names)`
   );
