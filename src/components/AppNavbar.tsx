@@ -23,7 +23,10 @@ export const AppNavbar = () => {
           Home
         </NavbarLink>
         <NavbarLink as={Link} to="/hostlers">
-          Hostlers
+          Available Hostlers
+        </NavbarLink>
+        <NavbarLink as={Link} to="/appointments">
+          Appointments
         </NavbarLink>
       </NavbarCollapse>
     </Navbar>

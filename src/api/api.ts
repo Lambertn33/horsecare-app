@@ -47,3 +47,9 @@ export const getSingleHostler = async (id: string) =>
     `id, names, description, services(id, name, price)`,
     id
   );
+
+export const getAllBookings = async () =>
+  await GET_ALL(
+    "bookings",
+    `id, names, email, date, services(id, name), horsecares(names)`
+  );

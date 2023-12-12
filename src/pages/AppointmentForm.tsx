@@ -13,7 +13,7 @@ import { getSingleHostler, POST } from "@/api/api";
 import { AppCard, AppInput, AppSelect, AppSpinner } from "@/components";
 import { Button } from "flowbite-react";
 
-export const Appointment = () => {
+export const AppointmentForm = () => {
   const { hostlerId } = useParams<HostlerParams>();
   const history = useHistory();
 

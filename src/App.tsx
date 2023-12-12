@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { AppNavbar } from "./components";
-import { Appointment, Home, Hostlers } from "./pages";
+import { AppointmentForm, AppointmentsList, Home, Hostlers } from "./pages";
 
 const App = () => {
   return (
@@ -13,10 +13,13 @@ const App = () => {
             <Home />
           </Route>
           <Route path="/hostlers/:hostlerId/book">
-            <Appointment />
+            <AppointmentForm />
           </Route>
           <Route path="/hostlers">
             <Hostlers />
+          </Route>
+          <Route path="/appointments">
+            <AppointmentsList />
           </Route>
         </Switch>
       </div>
