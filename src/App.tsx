@@ -1,7 +1,13 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { AppNavbar } from "./components";
-import { AppointmentForm, AppointmentsList, Home, Hostlers } from "./pages";
+import {
+  AppointmentForm,
+  AppointmentsList,
+  Home,
+  Hostlers,
+  Notfound,
+} from "./pages";
 
 const App = () => {
   return (
@@ -20,6 +26,9 @@ const App = () => {
           </Route>
           <Route path="/appointments">
             <AppointmentsList />
+          </Route>
+          <Route path="*">
+            <Notfound />
           </Route>
         </Switch>
       </div>
