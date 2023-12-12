@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 
 import { HostlerParams, HostlerInterface, AppointmentData } from "@/interfaces";
 import { getSingleHostler } from "@/api/api";
@@ -43,7 +44,10 @@ export const Appointment = () => {
   }, [hostlerId]);
 
   return (
-    <div>
+    <div className="flex flex-col">
+      <Link to="/hostlers">
+        <IoIosArrowBack className="text-primary text-3xl font-bold" />
+      </Link>
       <section className="bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           {isLoading ? (
