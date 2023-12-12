@@ -24,12 +24,10 @@ jobs:
           name: dist-files
           path: dist
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     steps:
       - name: download the artifacts
         uses: actions/download-artifact@v3
         with:
           name: dist-files
-      - name: deploy
-        run: echo "deploying...."
