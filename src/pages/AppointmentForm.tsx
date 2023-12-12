@@ -9,9 +9,16 @@ import {
   AppointmentDataInterface,
   NewAppointmentDataInterface,
 } from "@/interfaces";
+
 import { getSingleHostler, POST } from "@/api/api";
-import { AppCard, AppInput, AppSelect, AppSpinner } from "@/components";
-import { Button } from "flowbite-react";
+
+import {
+  AppButton,
+  AppCard,
+  AppInput,
+  AppSelect,
+  AppSpinner,
+} from "@/components";
 
 export const AppointmentForm = () => {
   const { hostlerId } = useParams<HostlerParamsInterface>();
@@ -21,12 +28,13 @@ export const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [appointmentData, setAppointmentData] = useState<AppointmentDataInterface>({
-    names: "",
-    email: "",
-    date: new Date(),
-    serviceId: "",
-  });
+  const [appointmentData, setAppointmentData] =
+    useState<AppointmentDataInterface>({
+      names: "",
+      email: "",
+      date: new Date(),
+      serviceId: "",
+    });
 
   const handleChangeInput = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -75,11 +83,11 @@ export const AppointmentForm = () => {
       setIsSubmitting(false);
       Swal.fire({
         title: "Success!",
-        text: "Appointment made successfully, report will downoloaded soon",
+        text: "Appointment made successfully",
         icon: "success",
         confirmButtonText: "Ok",
         preConfirm: () => {
-          history.push("/hostlers");
+          history.push("/appointments");
         },
       });
     }
@@ -156,9 +164,14 @@ export const AppointmentForm = () => {
                       onChange={handleChangeInput}
                     />
 
-                    <Button type="submit" disabled={isSubmitting}>
+                    <AppButton
+                      type="submit"
+                      additionalProps={{
+                        disabled: isSubmitting,
+                      }}
+                    >
                       {isSubmitting ? "Please wait..." : "Submit"}
-                    </Button>
+                    </AppButton>
                   </form>
                 </AppCard>
               </div>
