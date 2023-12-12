@@ -8,7 +8,12 @@ export default {
   ],
 
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#0e7ea3',
+        secondary: '#cffafe'
+      }
+    },
   },
   plugins: [flowbitePlugin],
 };

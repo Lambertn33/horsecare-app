@@ -1,3 +1,3 @@
-import { AppNavbar } from "./UI/AppNavbar";
+import { AppNavbar } from "./AppNavbar";
 
 export { AppNavbar };
