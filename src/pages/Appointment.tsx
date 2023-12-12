@@ -75,7 +75,7 @@ export const Appointment = () => {
       setIsSubmitting(false);
       Swal.fire({
         title: "Success!",
-        text: "Do you want to continue",
+        text: "Appointment made successfully, report will downoloaded soon",
         icon: "success",
         confirmButtonText: "Ok",
         preConfirm: () => {
