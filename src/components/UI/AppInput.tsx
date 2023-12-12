@@ -2,7 +2,7 @@ import { FC, ChangeEvent } from "react";
 import { Label, TextInput } from "flowbite-react";
 
 interface AppInputProps {
-  label: string;
+  label?: string;
   type: "text" | "date" | "email";
   value?: string | Date;
   name?: string;
