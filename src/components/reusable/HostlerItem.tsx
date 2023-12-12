@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { Badge } from "flowbite-react";
 
-import { AppButton, AppCard } from "..";
+import { AppCard } from "..";
 import { HostlerInterface } from "@/interfaces";
 import img from "@/assets/horsekeeper.png";
+import { Link } from "react-router-dom";
 
 interface HostlerItemProps {
   hostler: HostlerInterface;
@@ -25,7 +26,12 @@ export const HostlerItem: FC<HostlerItemProps> = ({ hostler }) => {
           </Badge>
         ))}
       </div>
-      <AppButton>Book Now</AppButton>
+      <Link
+        className="group flex items-center justify-center p-2 text-center font-medium relative text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 rounded-lg focus:ring-2"
+        to={`/hostlers/${hostler.id}/book`}
+      >
+        Book Now
+      </Link>
     </AppCard>
   );
 };
