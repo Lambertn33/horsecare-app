@@ -1,6 +1,8 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+
+import Swal from 'sweetalert2'
 
 import { HostlerParams, HostlerInterface, AppointmentData } from "@/interfaces";
 import { getSingleHostler } from "@/api/api";
@@ -43,6 +45,17 @@ export const Appointment = () => {
     fetchHostler();
   }, [hostlerId]);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log(appointmentData);
+    Swal.fire({
+      title: 'Error!',
+      text: 'Do you want to continue',
+      icon: 'success',
+      confirmButtonText: 'Cool'
+    })
+  }
+
   return (
     <div className="flex flex-col">
       <Link to="/hostlers">
@@ -64,7 +77,7 @@ export const Appointment = () => {
               </div>
               <div className="w-full">
                 <Card className="max-w-sm mx-auto">
-                  <form className="flex flex-col gap-4">
+                  <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <AppInput
                       disabled={false}
                       label="Your names"
@@ -96,7 +109,7 @@ export const Appointment = () => {
                         min: new Date().toISOString().split("T")[0],
                         required: true,
                       }}
-                      value={appointmentData.names}
+                      value={appointmentData.date}
                       onChange={handleChangeInput}
                     />
 

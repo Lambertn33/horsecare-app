@@ -4,7 +4,7 @@ import { Label, TextInput } from "flowbite-react";
 interface AppInputProps {
   label: string;
   type: "text" | "date" | "email";
-  value?: string;
+  value?: string | Date;
   name?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
@@ -20,6 +20,10 @@ export const AppInput: FC<AppInputProps> = ({
   disabled,
   additionalProps,
 }) => {
+  const formattedValue =
+    type === "date" && value instanceof Date
+      ? value.toISOString().split("T")[0]
+      : (value as string | undefined);
   return (
     <div>
       <div className="mb-2 block">
@@ -28,7 +32,7 @@ export const AppInput: FC<AppInputProps> = ({
       <TextInput
         name={name}
         type={type}
-        value={value}
+        value={formattedValue}
         onChange={onChange}
         disabled={disabled}
         {...additionalProps}

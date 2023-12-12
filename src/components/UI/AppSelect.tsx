@@ -22,7 +22,8 @@ export const AppSelect: FC<AppSelectProps> = ({
       <div className="mb-2 block">
         <Label htmlFor="select" value={label} />
       </div>
-      <Select id="select" name={name} onChange={onChange}>
+      <Select id="select" name={name} onChange={onChange} defaultValue={''} required>
+        <option value="">Select The Service</option>
         {options?.map((op) => (
           <option key={op.id} value={op.id}>
             {op.name}
