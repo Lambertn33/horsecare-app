@@ -4,24 +4,24 @@ import { IoIosArrowBack } from "react-icons/io";
 import Swal from "sweetalert2";
 
 import {
-  HostlerParams,
+  HostlerParamsInterface,
   HostlerInterface,
-  AppointmentData,
-  NewAppointmentData,
+  AppointmentDataInterface,
+  NewAppointmentDataInterface,
 } from "@/interfaces";
 import { getSingleHostler, POST } from "@/api/api";
 import { AppCard, AppInput, AppSelect, AppSpinner } from "@/components";
 import { Button } from "flowbite-react";
 
 export const AppointmentForm = () => {
-  const { hostlerId } = useParams<HostlerParams>();
+  const { hostlerId } = useParams<HostlerParamsInterface>();
   const history = useHistory();
 
   const [hostler, setHostler] = useState<HostlerInterface | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [appointmentData, setAppointmentData] = useState<AppointmentData>({
+  const [appointmentData, setAppointmentData] = useState<AppointmentDataInterface>({
     names: "",
     email: "",
     date: new Date(),
@@ -62,7 +62,7 @@ export const AppointmentForm = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const newAppointment: NewAppointmentData = {
+    const newAppointment: NewAppointmentDataInterface = {
       date: appointmentData.date,
       email: appointmentData.email,
       names: appointmentData.names,

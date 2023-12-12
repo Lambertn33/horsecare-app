@@ -1,5 +1,5 @@
 import { supabase } from "@/helpers/supabase";
-import { NewAppointmentData, HostlerInterface } from "@/interfaces";
+import { NewAppointmentDataInterface, HostlerInterface } from "@/interfaces";
 
 const GET_ALL = async (
   model: string,
@@ -22,7 +22,7 @@ const GET_ONE = async (
   return data as unknown as HostlerInterface;
 };
 
-export const POST = async (submittedData: NewAppointmentData) => {
+export const POST = async (submittedData: NewAppointmentDataInterface) => {
   const { data, error } = await supabase
     .from("bookings")
     .insert([
@@ -51,5 +51,5 @@ export const getSingleHostler = async (id: string) =>
 export const getAllBookings = async () =>
   await GET_ALL(
     "bookings",
-    `id, names, email, date, services(id, name), horsecares(names)`
+    `id, names, email, date, services(name), horsecares(names)`
   );

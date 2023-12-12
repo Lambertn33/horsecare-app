@@ -10,21 +10,34 @@ export interface HostlerInterface {
   services: HostlerServiceInterface[];
 }
 
-export interface HostlerParams {
+export interface HostlerParamsInterface {
   hostlerId: string;
 }
 
-export interface AppointmentData {
+export interface AppointmentDataInterface {
   names: string;
   email: string;
   date: Date;
   serviceId: string;
 }
 
-export interface NewAppointmentData {
+export interface NewAppointmentDataInterface {
   names: string;
   email: string;
   date: Date;
   serviceId: string;
   userId: string;
+}
+
+export interface BookingInterface {
+  id: number;
+  names: string;
+  email: string;
+  date: string;
+  services: {
+    name: string;
+  };
+  horsecares: {
+    names: string;
+  };
 }
