@@ -9,3 +9,7 @@ export interface HostlerInterface {
   description: string;
   services: HostlerServiceInterface[];
 }
+
+export interface HostlerParams {
+  hostlerId: string;
+}
