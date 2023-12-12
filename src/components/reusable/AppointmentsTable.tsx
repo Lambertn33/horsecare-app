@@ -17,6 +17,7 @@ export const AppointmentsTable: FC<AppointmentsTableProps> = ({ bookings }) => {
         <Table.Cell>{booking.email}</Table.Cell>
         <Table.Cell>{booking.horsecares.names}</Table.Cell>
         <Table.Cell>{booking.services?.name}</Table.Cell>
+        <Table.Cell>${booking.services?.price}</Table.Cell>
         <Table.Cell>{booking.date}</Table.Cell>
       </Table.Row>
     );
@@ -30,6 +31,7 @@ export const AppointmentsTable: FC<AppointmentsTableProps> = ({ bookings }) => {
           <Table.HeadCell>User email</Table.HeadCell>
           <Table.HeadCell>Hostler</Table.HeadCell>
           <Table.HeadCell>Service</Table.HeadCell>
+          <Table.HeadCell>Service Price</Table.HeadCell>
           <Table.HeadCell>Appointment date</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">

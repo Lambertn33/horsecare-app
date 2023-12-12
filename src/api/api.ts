@@ -58,5 +58,5 @@ export const getSingleHostler = async (id: string) =>
 export const getAllBookings = async () =>
   await GET_ALL<BookingInterface>(
     "bookings",
-    `id, names, email, date, services(name), horsecares(names)`
+    `id, names, email, date, services(name, price), horsecares(names)`
   );

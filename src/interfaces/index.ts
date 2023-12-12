@@ -36,6 +36,7 @@ export interface BookingInterface {
   date: string;
   services: {
     name: string;
+    price: number;
   };
   horsecares: {
     names: string;
