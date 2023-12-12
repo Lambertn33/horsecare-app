@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
     "autoprefixer": "^10.4.16",
     "flowbite-react": "^0.7.0",
     "postcss": "^8.4.32",
