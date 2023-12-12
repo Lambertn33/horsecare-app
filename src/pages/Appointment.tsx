@@ -1,14 +1,36 @@
+import { useEffect, useState, ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { HostlerParams, HostlerInterface } from "@/interfaces";
+
+import { HostlerParams, HostlerInterface, AppointmentData } from "@/interfaces";
 import { getSingleHostler } from "@/api/api";
-import { AppSpinner } from "@/components";
-import { Button, Card, Label, TextInput } from "flowbite-react";
+import { AppInput, AppSelect, AppSpinner } from "@/components";
+import { Button, Card } from "flowbite-react";
 
 export const Appointment = () => {
   const { hostlerId } = useParams<HostlerParams>();
+
   const [hostler, setHostler] = useState<HostlerInterface | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [appointmentData, setAppointmentData] = useState<AppointmentData>({
+    names: "",
+    email: "",
+    date: new Date(),
+    serviceId: null,
+    userId: hostlerId,
+  });
+
+  const handleChangeInput = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setAppointmentData((prevData) => {
+      return {
+        ...prevData,
+        [name]: value,
+      };
+    });
+  };
 
   useEffect(() => {
     const fetchHostler = async () => {
@@ -38,23 +60,48 @@ export const Appointment = () => {
             <div className="w-full">
               <Card className="max-w-sm mx-auto">
                 <form className="flex flex-col gap-4">
-                  <div>
-                    <div className="mb-2 block">
-                      <Label htmlFor="email1" value="Your email" />
-                    </div>
-                    <TextInput
-                      id="email1"
-                      type="email"
-                      placeholder="name@flowbite.com"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <div className="mb-2 block">
-                      <Label htmlFor="password1" value="Your password" />
-                    </div>
-                    <TextInput id="password1" type="password" required />
-                  </div>
+                  <AppInput
+                    disabled={false}
+                    label="Your names"
+                    name="names"
+                    type="text"
+                    value={appointmentData.names}
+                    onChange={handleChangeInput}
+                  />
+                  <AppInput
+                    disabled={false}
+                    label="Your email"
+                    name="email"
+                    type="email"
+                    value={appointmentData.email}
+                    onChange={handleChangeInput}
+                  />
+                  <AppInput
+                    disabled={false}
+                    label="Date"
+                    name="date"
+                    type="date"
+                    additionalProps={{
+                      min: new Date().toISOString().split("T")[0],
+                    }}
+                    value={appointmentData.names}
+                    onChange={handleChangeInput}
+                  />
+
+                  <AppInput
+                    disabled={true}
+                    label="Hostler names"
+                    type="text"
+                    value={hostler?.names}
+                  />
+
+                  <AppSelect
+                    label="Select the service"
+                    name="serviceId"
+                    options={hostler?.services}
+                    onChange={handleChangeInput}
+                  />
+
                   <Button type="submit">Submit</Button>
                 </form>
               </Card>

@@ -13,3 +13,11 @@ export interface HostlerInterface {
 export interface HostlerParams {
   hostlerId: string;
 }
+
+export interface AppointmentData {
+  names: string;
+  email: string;
+  date: Date;
+  serviceId: number | null;
+  userId: string;
+}
