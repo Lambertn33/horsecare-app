@@ -11,7 +11,7 @@ import Logo from "@/assets/logo.png";
 export const AppNavbar = () => {
   return (
     <Navbar rounded className="bg-gray-100">
-      <NavbarBrand as={Link} href="/">
+      <NavbarBrand as={Link} to="/">
         <img src={Logo} className="mr-3 h-12" alt="" />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Horse cares
