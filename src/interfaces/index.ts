@@ -18,6 +18,13 @@ export interface AppointmentData {
   names: string;
   email: string;
   date: Date;
-  serviceId: number | null;
+  serviceId: string;
+}
+
+export interface NewAppointmentData {
+  names: string;
+  email: string;
+  date: Date;
+  serviceId: string;
   userId: string;
 }

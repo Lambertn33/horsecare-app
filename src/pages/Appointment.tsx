@@ -1,26 +1,31 @@
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import Swal from "sweetalert2";
 
-import Swal from 'sweetalert2'
-
-import { HostlerParams, HostlerInterface, AppointmentData } from "@/interfaces";
-import { getSingleHostler } from "@/api/api";
-import { AppInput, AppSelect, AppSpinner } from "@/components";
-import { Button, Card } from "flowbite-react";
+import {
+  HostlerParams,
+  HostlerInterface,
+  AppointmentData,
+  NewAppointmentData,
+} from "@/interfaces";
+import { getSingleHostler, POST } from "@/api/api";
+import { AppCard, AppInput, AppSelect, AppSpinner } from "@/components";
+import { Button } from "flowbite-react";
 
 export const Appointment = () => {
   const { hostlerId } = useParams<HostlerParams>();
+  const history = useHistory();
 
   const [hostler, setHostler] = useState<HostlerInterface | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [appointmentData, setAppointmentData] = useState<AppointmentData>({
     names: "",
     email: "",
     date: new Date(),
-    serviceId: null,
-    userId: hostlerId,
+    serviceId: "",
   });
 
   const handleChangeInput = (
@@ -45,16 +50,40 @@ export const Appointment = () => {
     fetchHostler();
   }, [hostlerId]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const clearForm = () => {
+    setAppointmentData({
+      names: "",
+      email: "",
+      date: new Date(),
+      serviceId: "",
+    });
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(appointmentData);
-    Swal.fire({
-      title: 'Error!',
-      text: 'Do you want to continue',
-      icon: 'success',
-      confirmButtonText: 'Cool'
-    })
-  }
+    setIsSubmitting(true);
+    const newAppointment: NewAppointmentData = {
+      date: appointmentData.date,
+      email: appointmentData.email,
+      names: appointmentData.names,
+      serviceId: appointmentData.serviceId,
+      userId: hostlerId,
+    };
+    const { data } = await POST(newAppointment);
+    if (data) {
+      clearForm();
+      setIsSubmitting(false);
+      Swal.fire({
+        title: "Success!",
+        text: "Do you want to continue",
+        icon: "success",
+        confirmButtonText: "Ok",
+        preConfirm: () => {
+          history.push("/hostlers");
+        },
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col">
@@ -76,7 +105,7 @@ export const Appointment = () => {
                 </p>
               </div>
               <div className="w-full">
-                <Card className="max-w-sm mx-auto">
+                <AppCard>
                   <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <AppInput
                       disabled={false}
@@ -127,9 +156,11 @@ export const Appointment = () => {
                       onChange={handleChangeInput}
                     />
 
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? "Please wait..." : "Submit"}
+                    </Button>
                   </form>
-                </Card>
+                </AppCard>
               </div>
             </>
           )}

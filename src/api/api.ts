@@ -1,5 +1,5 @@
 import { supabase } from "@/helpers/supabase";
-import { HostlerInterface } from "@/interfaces";
+import { NewAppointmentData, HostlerInterface } from "@/interfaces";
 
 const GET_ALL = async (
   model: string,
@@ -20,6 +20,22 @@ const GET_ONE = async (
     .eq("id", id)
     .single();
   return data as unknown as HostlerInterface;
+};
+
+export const POST = async (submittedData: NewAppointmentData) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .insert([
+      {
+        names: submittedData.names,
+        email: submittedData.email,
+        service_id: parseInt(submittedData.serviceId),
+        user_id: parseInt(submittedData.userId),
+        date: new Date(submittedData.date),
+      },
+    ])
+    .select();
+  return { data, error };
 };
 
 export const getAllHostlers = async () =>
