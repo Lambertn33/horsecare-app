@@ -1,26 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { AppInput, AppSpinner, HostlerItem } from "@/components";
 import { HostlerInterface } from "@/interfaces";
-import { getAllHostlers } from "@/api/api";
+import { getAllHostlers, searchHostler } from "@/api/api";
 
 export const Hostlers = () => {
   const [hostlers, setHostlers] = useState<HostlerInterface[] | null>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  const fetchHostlers = async () => {
+    setIsLoading(true);
+    const data = await getAllHostlers();
+    setHostlers(data);
+    setIsLoading(false);
+  };
+
+  const handleSearchHostler = useCallback(async () => {
+    setIsLoading(true);
+    const searchData = await searchHostler(searchQuery);
+    setHostlers(searchData.data);
+    setIsLoading(false);
+  }, [searchQuery]);
+
   useEffect(() => {
-    const fetchHostlers = async () => {
-      setIsLoading(true);
-      const data = await getAllHostlers();
-      setHostlers(data);
-      setIsLoading(false);
-    };
+   
     fetchHostlers();
   }, []);
 
-  const filteredHostlers = hostlers?.filter((hostler) =>
-    hostler.names.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      handleSearchHostler();
+    } else {
+      fetchHostlers();
+    }
+  }, [searchQuery, handleSearchHostler]);
+
 
   return (
     <section className="bg-white dark:bg-gray-900">
@@ -49,9 +63,9 @@ export const Hostlers = () => {
           <div className="flex items-center justify-center w-full h-full">
             <AppSpinner />
           </div>
-        ) : filteredHostlers && filteredHostlers.length > 0 ? (
+        ) :hostlers &&hostlers.length > 0 ? (
           <div className="grid gap-8 mb-6 lg:mb-16 md:grid-cols-3">
-            {filteredHostlers.map((hostler) => (
+            {hostlers.map((hostler) => (
               <HostlerItem key={hostler.id} hostler={hostler} />
             ))}
           </div>

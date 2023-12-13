@@ -60,3 +60,11 @@ export const getAllBookings = async () =>
     "bookings",
     `id, names, email, date, services(name, price), horsecares(names)`
   );
+
+export const searchHostler = async (names: string) => {
+  const { data } = await supabase
+    .from("horsecares")
+    .select(`id, names, description, services(id, name)`)
+    .ilike("names", `%${names}%`);
+  return { data };
+};
