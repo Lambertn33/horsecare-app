@@ -8,6 +8,7 @@ export const Hostlers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
+  // initial fetch hostlers
   const fetchHostlers = async () => {
     setIsLoading(true);
     const data = await getAllHostlers();
@@ -15,6 +16,7 @@ export const Hostlers = () => {
     setIsLoading(false);
   };
 
+  // search hostler
   const handleSearchHostler = useCallback(async () => {
     setIsLoading(true);
     const searchData = await searchHostler(searchQuery);
@@ -22,8 +24,7 @@ export const Hostlers = () => {
     setIsLoading(false);
   }, [searchQuery]);
 
-  useEffect(() => {
-   
+  useEffect(() => {   
     fetchHostlers();
   }, []);
 
@@ -34,7 +35,6 @@ export const Hostlers = () => {
       fetchHostlers();
     }
   }, [searchQuery, handleSearchHostler]);
-
 
   return (
     <section className="bg-white dark:bg-gray-900">
