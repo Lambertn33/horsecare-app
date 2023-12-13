@@ -18,7 +18,7 @@ const App = () => {
           <Route path="/" exact>
             <Home />
           </Route>
-          <Route path="/hostlers/:hostlerId/book">
+          <Route path="/hostlers/:hostlerId">
             <AppointmentForm />
           </Route>
           <Route path="/hostlers">

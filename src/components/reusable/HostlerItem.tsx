@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Badge } from "flowbite-react";
+// import { Badge } from "flowbite-react";
 
 import { AppCard } from "..";
 import { HostlerInterface } from "@/interfaces";
@@ -16,21 +16,11 @@ export const HostlerItem: FC<HostlerItemProps> = ({ hostler }) => {
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {hostler.names}
       </h5>
-      <p className="font-normal text-gray-700 dark:text-gray-400">
-        {hostler.description}
-      </p>
-      <div className="flex gap-2">
-        {hostler.services.map((service) => (
-          <Badge key={service.id} color="success">
-            {service.name}
-          </Badge>
-        ))}
-      </div>
       <Link
         className="group flex items-center justify-center p-2 text-center font-medium relative text-white bg-cyan-700 border border-transparent enabled:hover:bg-cyan-800 rounded-lg focus:ring-2"
-        to={`/hostlers/${hostler.id}/book`}
+        to={`/hostlers/${hostler.id}`}
       >
-        Book Now
+        View more
       </Link>
     </AppCard>
   );

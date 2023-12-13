@@ -45,7 +45,7 @@ export const POST = async (submittedData: NewAppointmentDataInterface) => {
 export const getAllHostlers = async () =>
   await GET_ALL<HostlerInterface>(
     "horsecares",
-    `id, names, description, services(id, name)`
+    `id, names`
   );
 
 export const getSingleHostler = async (id: string) =>
