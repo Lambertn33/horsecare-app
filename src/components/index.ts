@@ -6,6 +6,7 @@ import { AppSelect } from "./UI/AppSelect";
 import { AppSpinner } from "./UI/AppSpinner";
 
 import { AppointmentsTable } from "./reusable/AppointmentsTable";
+import { HostlerDetails } from "./reusable/HostlerDetails";
 import { HostlerItem } from "./reusable/HostlerItem";
 
 export {
@@ -16,5 +17,6 @@ export {
   AppNavbar,
   AppSelect,
   AppSpinner,
+  HostlerDetails,
   HostlerItem,
 };

@@ -18,6 +18,7 @@ import {
   AppInput,
   AppSelect,
   AppSpinner,
+  HostlerDetails,
 } from "@/components";
 
 export const AppointmentForm = () => {
@@ -36,6 +37,7 @@ export const AppointmentForm = () => {
       serviceId: "",
     });
 
+  // Handle inputs
   const handleChangeInput = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -48,6 +50,7 @@ export const AppointmentForm = () => {
     });
   };
 
+  // initial hostler fetching
   useEffect(() => {
     const fetchHostler = async () => {
       setIsLoading(true);
@@ -67,6 +70,7 @@ export const AppointmentForm = () => {
     });
   };
 
+  // make appointment
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -94,91 +98,96 @@ export const AppointmentForm = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col px-16">
       <Link to="/hostlers">
         <IoIosArrowBack className="text-primary text-3xl font-bold" />
       </Link>
-      <section className="bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-          {isLoading ? (
-            <AppSpinner />
-          ) : (
-            <>
-              <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
-                <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-primary">
-                  {hostler?.names}
-                </h2>
-                <p className="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
-                  Make an appointment with {hostler?.names}
-                </p>
-              </div>
-              <div className="w-full">
-                <AppCard>
-                  <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                    <AppInput
-                      disabled={false}
-                      label="Your names"
-                      name="names"
-                      type="text"
-                      value={appointmentData.names}
-                      onChange={handleChangeInput}
-                      additionalProps={{
-                        required: true,
-                      }}
-                    />
-                    <AppInput
-                      disabled={false}
-                      label="Your email"
-                      name="email"
-                      type="email"
-                      value={appointmentData.email}
-                      onChange={handleChangeInput}
-                      additionalProps={{
-                        required: true,
-                      }}
-                    />
-                    <AppInput
-                      disabled={false}
-                      label="Date"
-                      name="date"
-                      type="date"
-                      additionalProps={{
-                        min: new Date().toISOString().split("T")[0],
-                        required: true,
-                      }}
-                      value={appointmentData.date}
-                      onChange={handleChangeInput}
-                    />
-
-                    <AppInput
-                      disabled={true}
-                      label="Hostler names"
-                      type="text"
-                      value={hostler?.names}
-                    />
-
-                    <AppSelect
-                      label="Select the service"
-                      name="serviceId"
-                      options={hostler?.services}
-                      onChange={handleChangeInput}
-                    />
-
-                    <AppButton
-                      type="submit"
-                      additionalProps={{
-                        disabled: isSubmitting,
-                      }}
-                    >
-                      {isSubmitting ? "Please wait..." : "Submit"}
-                    </AppButton>
-                  </form>
-                </AppCard>
-              </div>
-            </>
-          )}
+      {isLoading ? (
+        <div className="flex justify-center items-center w-full">
+          <AppSpinner />
         </div>
-      </section>
+      ) : (
+        <div className="flex justify-between gap-4">
+          <HostlerDetails hostler={hostler!} />
+          <section className="bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
+            <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+              <>
+                <div className="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+                  <p className="font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
+                    Make an appointment with {hostler?.names}
+                  </p>
+                </div>
+                <div className="w-full">
+                  <AppCard>
+                    <form
+                      className="flex flex-col gap-4"
+                      onSubmit={handleSubmit}
+                    >
+                      <AppInput
+                        disabled={false}
+                        label="Your names"
+                        name="names"
+                        type="text"
+                        value={appointmentData.names}
+                        onChange={handleChangeInput}
+                        additionalProps={{
+                          required: true,
+                        }}
+                      />
+                      <AppInput
+                        disabled={false}
+                        label="Your email"
+                        name="email"
+                        type="email"
+                        value={appointmentData.email}
+                        onChange={handleChangeInput}
+                        additionalProps={{
+                          required: true,
+                        }}
+                      />
+                      <AppInput
+                        disabled={false}
+                        label="Date"
+                        name="date"
+                        type="date"
+                        additionalProps={{
+                          min: new Date().toISOString().split("T")[0],
+                          required: true,
+                        }}
+                        value={appointmentData.date}
+                        onChange={handleChangeInput}
+                      />
+
+                      <AppInput
+                        disabled={true}
+                        label="Hostler names"
+                        type="text"
+                        value={hostler?.names}
+                      />
+
+                      <AppSelect
+                        label="Select the service"
+                        name="serviceId"
+                        options={hostler?.services}
+                        onChange={handleChangeInput}
+                      />
+
+                      <AppButton
+                        type="submit"
+                        additionalProps={{
+                          disabled: isSubmitting,
+                        }}
+                      >
+                        {isSubmitting ? "Please wait..." : "Submit"}
+                      </AppButton>
+                    </form>
+                  </AppCard>
+                </div>
+              </>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 };
